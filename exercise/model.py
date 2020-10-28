@@ -73,7 +73,11 @@ class SeniorityModel:
         return
 
     def predict(self, job_titles):
-
+        """
+        Does the inference for the given input
+        :param job_titles:
+        :return: list of predictions
+        """
         if self.model is None:
             raise ValueError('Model object is None. Model should be loaded before calling predict function. Call load function before predict.')
 
@@ -85,7 +89,11 @@ class SeniorityModel:
         return predictions
 
     def _create_input(self, input):
-        """Creates the input for the model from the response json."""
+        """
+        Creates the input for the model from the response json.
+        :param input
+        :return: ids, job titles
+        """
         ids = []
         job_titles = []
         try:
@@ -97,7 +105,11 @@ class SeniorityModel:
             raise KeyError(f"Response Json does not have the key {e}")
 
     def predict_salesloft_team(self):
-        """Calls the salesloft API to recieve the list of all people and the run the job titles through the model."""
+        """
+        Calls the salesloft API to recieve the list of all people and the run the job titles through the model.
+        :param
+        :return list of tuples
+        """
         response = requests.get(self.api_url,
                                 headers={"Accept": "application/json", "Authorization": f"Bearer {self.api_key}"})
         data = response.json()
@@ -109,7 +121,11 @@ class SeniorityModel:
             return
 
     def save(self, file_name):
-        """Saves the model file in an language-agnostic format(onnx) at the specified location."""
+        """
+        Saves the model file in an language-agnostic format(onnx) at the specified location.
+        :param location to save the model
+        :return:
+        """
         if self.model is None:
             raise ValueError('Model object is None. Model should be trained before saving')
 
@@ -119,7 +135,11 @@ class SeniorityModel:
             f.write(onx.SerializeToString())
 
     def load(self, file_name):
-        """Loads the saved model from a given location."""
+        """
+        Loads the saved model from a given location.
+        :param location to load the model
+        :return:
+        """
         if not os.path.isfile(file_name):
             raise FileNotFoundError(f'{file_name} does not exist.')
 
