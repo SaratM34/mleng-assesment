@@ -88,10 +88,13 @@ class SeniorityModel:
         """Creates the input for the model from the response json."""
         ids = []
         job_titles = []
-        for item in input['data']:
-            ids.append(item['id'])
-            job_titles.append(item['title'])
-        return ids, job_titles
+        try:
+            for item in input['data']:
+                ids.append(item['id'])
+                job_titles.append(item['title'])
+            return ids, job_titles
+        except KeyError as e:
+            raise KeyError(f"Response Json does not have the key {e}")
 
     def predict_salesloft_team(self):
         """Calls the salesloft API to recieve the list of all people and the run the job titles through the model."""
@@ -99,8 +102,11 @@ class SeniorityModel:
                                 headers={"Accept": "application/json", "Authorization": f"Bearer {self.api_key}"})
         data = response.json()
         ids, job_titles = self._create_input(data)
-        predictions = self.predict(job_titles)
-        return list(zip(ids, predictions))
+        if ids and job_titles:
+            predictions = self.predict(job_titles)
+            return list(zip(ids, predictions))
+        else:
+            return
 
     def save(self, file_name):
         """Saves the model file in an language-agnostic format(onnx) at the specified location."""

@@ -52,5 +52,14 @@ class TestModel(unittest.TestCase):
 
         self.assertEqual(diff, 0)
 
+    def test_predictions_api(self):
+        """
+        Test that predictions are working for data from the salesloft API
+        """
+        s = SeniorityModel()
+        s.load('models/seniority_model_v1_test.onnx')
+        self.assertNotEqual(s.predict_salesloft_team(), None)
+
+
 if __name__ == '__main__':
     unittest.main()
