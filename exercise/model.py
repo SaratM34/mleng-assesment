@@ -75,7 +75,7 @@ class SeniorityModel:
     def predict(self, job_titles):
         """
         Does the inference for the given input
-        :param job_titles:
+        :param job_titles
         :return: list of predictions
         """
         if self.model is None:
@@ -85,6 +85,7 @@ class SeniorityModel:
         cleaned_job_titles = np.array([clean_transform_title(jt) for jt in job_titles])
         cleaned_job_titles = cleaned_job_titles.reshape((-1, 1))
 
+        # Since we persisted the pipeline. Model.run will transform the input using count vectorizer and does the predictions.
         predictions = self.model.run(None, {'strfeat': cleaned_job_titles})[0]
         return predictions
 
