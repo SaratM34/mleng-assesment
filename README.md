@@ -44,3 +44,9 @@ print(s.predict_salesloft_team())
 ## Note
 - I created a pipeline within the fit function since I need to persist both CountVectorizer object and the model.
 - Also, Due to the limitations of using stop_words='english' within the count vectorizer. I felt comfortable in removing stop_words argument since the stopwords within our input feature Job Titles are very infrequent and I prefer to use stopwords and word tokenizer from NLTK library and create a separate utility function to filter the stopwords from the text.
+
+## Run Tests
+
+```
+python -m unittest test.py
+```

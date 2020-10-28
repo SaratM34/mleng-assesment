@@ -125,8 +125,8 @@ if __name__ == '__main__':
     job_titles = data['job_title'].values
     job_seniority = data['job_seniority'].values
     s = SeniorityModel()
-    #s.fit(job_titles, job_seniority)
-    #s.save('../models/seniority_model_v1.onnx')
+    s.fit(job_titles, job_seniority)
+    s.save('../models/seniority_model_v1.onnx')
     s.load('../models/seniority_model_v1.onnx')
     print(s.predict(job_titles))
-    #print(s.predict_salesloft_team())
+    print(s.predict_salesloft_team())
